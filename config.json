@@ -1,0 +1,12 @@
+{
+	"country": "mexico",
+	"bounding_box": [-99.17667388916016, 19.466430383606728, -99.11865234374999, 19.51813278329343],
+	"zoom": 17,
+	"classes": [{
+		"name": "Buildings",
+		"filter": ["has", "building"]
+	}],
+	"imagery": "http://a.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q",
+	"background_ratio": 1,
+	"ml_type": "object-detection"
+}
