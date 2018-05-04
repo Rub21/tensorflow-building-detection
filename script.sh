@@ -29,7 +29,7 @@ cp label-maker/examples/utils/building_od.pbtxt $TOD/data
 
 # Train the TensorFlow object detection model
 # https://github.com/developmentseed/label-maker/blob/master/examples/walkthrough-tensorflow-object-detection.md#train-the-tensorflow-object-detection-model
-cd $WORKDIR && cd $TOD/
+cd $TOD/
 python train.py --logtostderr \
              --train_dir=training/ \
              --pipeline_config_path=training/ssd_inception_v2_coco.config
