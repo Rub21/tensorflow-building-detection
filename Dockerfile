@@ -54,13 +54,12 @@ RUN git clone --progress --depth=1 https://github.com/mapbox/tippecanoe.git && c
 RUN apt-get install -y protobuf-compiler python-pil python-lxml python-tk
 RUN pip install \
         bleach==1.5.0 \
-        Cython \
-        pillow \
-        lxml \
-        jupyter \
-        matplotlib \
-        pandas \
-        tensorflow
+        Cython==0.28.2 \
+        lxml==4.2.1 \
+        jupyter==1.0.0 \
+        matplotlib==2.2.2 \
+        pandas==0.22.0 \
+        tensorflow==1.8.0
 
 # Install Proto
 RUN wget https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip -P $workdir
