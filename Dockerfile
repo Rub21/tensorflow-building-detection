@@ -17,13 +17,14 @@ RUN apt-get install -y \
     libsqlite3-dev \
     zlib1g-dev \
     wget \
+    unzip \
     git
 
 RUN wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tar.xz && tar xvf Python-3.6.0.tar.xz && cd Python-3.6.0/ && ./configure && make install
 
-RUN add-apt-repository ppa:jonathonf/python-3.6
-RUN apt-get update
-RUN apt-get install -y python3.6-dev
+# RUN add-apt-repository ppa:jonathonf/python-3.6
+# RUN apt-get update
+# RUN apt-get install -y python3.6-dev
 RUN apt-get install -y libssl-dev libcurl4-openssl-dev
 
 RUN ln -s -f /usr/local/bin/python3 /usr/bin/python
@@ -52,8 +53,40 @@ RUN pip install \
         tilepie==0.2.1 \
         label-maker==0.3.1
 
-RUN git clone https://github.com/mapbox/tippecanoe.git && cd tippecanoe && make -j && make install
-WORKDIR /app
-COPY . /app
+RUN git clone --progress --depth=1 https://github.com/mapbox/tippecanoe.git && cd tippecanoe && make -j && make install
+
+# Install TensorFlow object detection
+RUN apt-get install -y protobuf-compiler python-pil python-lxml python-tk
+RUN pip install \
+        Cython \
+        pillow \
+        lxml \
+        jupyter \
+        matplotlib \
+        pandas \
+        tensorflow
+
+ENV workdir /usr/src/app
+RUN mkdir $workdir
+
+# Setup TensorFlow Object Detection API
+RUN git clone --progress --depth=1 https://github.com/tensorflow/models.git && mv -f models/* $workdir/models
+
+# Install Proto
+RUN wget https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip -P $workdir
+RUN unzip protoc-3.2.0-linux-x86_64.zip -d protoc3
+RUN mv -f protoc3/bin/* /usr/local/bin/
+RUN mv -f protoc3/include/* /usr/local/include/
+RUN ln -s -f /usr/local/bin/protoc /usr/bin/protoc
+
+WORKDIR $workdir
+# RUN git clone https://github.com/tensorflow/models.git && mv -f models/* $workdir/models
+RUN cd $workdir/models/research/ && protoc object_detection/protos/*.proto --python_out=.
+ENV PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+RUN python $workdir/models/research/object_detection/builders/model_builder_test.py
+# Create TFRecords for model training
+RUN git clone --progress --depth=1 https://github.com/developmentseed/label-maker.git $workdir/label-maker
+
+COPY . $workdir
 CMD ["bash", "script.sh"]
 
