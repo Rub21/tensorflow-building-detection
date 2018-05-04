@@ -58,8 +58,13 @@ RUN pip install \
         lxml==4.2.1 \
         jupyter==1.0.0 \
         matplotlib==2.2.2 \
-        pandas==0.22.0 \
-        tensorflow==1.8.0
+        pandas==0.22.0 
+        # tensorflow==1.8.0
+
+
+# Install TensorFlow CPU version from central repo
+RUN pip --no-cache-dir install \
+    http://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.0.0-cp27-none-linux_x86_64.whl
 
 # Install Proto
 RUN wget https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip -P $workdir
