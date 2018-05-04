@@ -25,14 +25,7 @@ RUN add-apt-repository ppa:jonathonf/python-3.6
 RUN apt-get update
 RUN apt-get install -y python3.6-dev
 RUN apt-get install -y libssl-dev libcurl4-openssl-dev
-# sudo apt update
-# sudo apt install python3.6
-# sudo apt install python3.6-dev
-# sudo apt install python3.6-venv
-# wget https://bootstrap.pypa.io/get-pip.py
-# sudo python3.6 get-pip.py
-# sudo ln -s /usr/bin/python3.6 /usr/local/bin/python3
-# sudo ln -s /usr/local/bin/pip /usr/local/bin/pip3
+
 RUN ln -s -f /usr/local/bin/python3 /usr/bin/python
 RUN ln -s -f /usr/local/bin/pip3 /usr/bin/pip
 RUN pip install --upgrade pip && pip install -U pip && pip install -U setuptools
