@@ -43,6 +43,12 @@ ENV PYTHONPATH=$PYTHONPATH:/usr/src/app/models/research:/usr/src/app/models/rese
 RUN cd $workdir/models/research && \
     python object_detection/builders/model_builder_test.py
 
+# Object detection model setup
+# https://github.com/developmentseed/label-maker/blob/master/examples/walkthrough-tensorflow-object-detection.md#object-detection-model-setup
+RUN cd $WORKDIR && wget http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2017_11_17.tar.gz && \
+    tar xvf ssd_inception_v2_coco_2017_11_17.tar.gz && \
+    mv ssd_inception_v2_coco_2017_11_17 $TOD/
+
 # Create TFRecords for model training
 RUN git clone --progress https://github.com/developmentseed/label-maker.git $workdir/label-maker && \
     cd $workdir/label-maker && \
