@@ -1,6 +1,7 @@
 FROM tensorflow/tensorflow:1.8.0-py3
 LABEL maintainer="Rub21"
 ENV workdir /usr/src/app
+ENV TOD /usr/src/app/models/research/object_detection
 RUN mkdir $workdir
 RUN apt-get update -y
 RUN apt-get install -y \

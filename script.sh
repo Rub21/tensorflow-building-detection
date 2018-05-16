@@ -15,9 +15,9 @@ python tf_records_generation.py --label_input=labels.npz \
         --train_rd_path=data/train_buildings.record \
         --test_rd_path=data/test_buildings.record
 
-mkdir $TOD/training
-cp label-maker/examples/utils/ssd_inception_v2_coco.config $TOD/training
-cp label-maker/examples/utils/building_od.pbtxt $TOD/data
+mkdir -p $TOD/training
+cp $WORKDIR/label-maker/examples/utils/ssd_inception_v2_coco.config $TOD/training
+cp $WORKDIR/label-maker/examples/utils/building_od.pbtxt $TOD/data
 
 # Train the TensorFlow object detection model
 # https://github.com/developmentseed/label-maker/blob/master/examples/walkthrough-tensorflow-object-detection.md#train-the-tensorflow-object-detection-model
