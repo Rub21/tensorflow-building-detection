@@ -1,8 +1,6 @@
 #!/bin/bash
 label-maker download
 label-maker labels
-#Preview : https://github.com/developmentseed/label-maker/issues/79
-#label-maker preview -n 10
 label-maker images
 
 WORKDIR='/usr/src/app'
@@ -17,11 +15,6 @@ python tf_records_generation.py --label_input=labels.npz \
         --train_rd_path=data/train_buildings.record \
         --test_rd_path=data/test_buildings.record
 
-# Object detection model setup
-# https://github.com/developmentseed/label-maker/blob/master/examples/walkthrough-tensorflow-object-detection.md#object-detection-model-setup
-cd $WORKDIR && wget http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2017_11_17.tar.gz
-tar xvf ssd_inception_v2_coco_2017_11_17.tar.gz
-mv ssd_inception_v2_coco_2017_11_17 $TOD/
 mkdir $TOD/training
 cp label-maker/examples/utils/ssd_inception_v2_coco.config $TOD/training
 cp label-maker/examples/utils/building_od.pbtxt $TOD/data
