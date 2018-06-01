@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  web:
+  tensorflow-building-detection:
     docker:
       - image: docker:17.05.0-ce-git
     steps:
@@ -20,7 +20,7 @@ jobs:
 
       - run:
           name: Build application docker image
-          command: docker build --cache-from=tensorflowbd -t web .
+          command: docker build --cache-from=tensorflowbd -t tensorflow-building-detection .
           no_output_timeout: 60m
 
       - run:
@@ -38,6 +38,11 @@ jobs:
          name: Push docker image
          command: |
           VERSION=$(grep -m1 version package.json | awk -F: '{ print $2 }' | sed 's/[", ]//g')
-          docker tag web rub21/tensorflow-building-detection:${VERSION}
+          docker tag tensorflow-building-detection rub21/tensorflow-building-detection:${VERSION}
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push rub21/tensorflow-building-detection:${VERSION}
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+      - tensorflow-building-detection
