@@ -20,7 +20,7 @@ jobs:
 
       - run:
           name: Build application docker image
-          command: docker build --cache-from=tensorflowbd -t web tensorflow-building-detection/
+          command: docker build --cache-from=tensorflowbd -t web .
           no_output_timeout: 60m
 
       - run:
