@@ -16,6 +16,7 @@ python tf_records_generation.py --label_input=labels.npz \
         --test_rd_path=data/test_buildings.record
 
 mkdir $TOD/training
+cd $WORKDIR
 cp label-maker/examples/utils/ssd_inception_v2_coco.config $TOD/training
 cp label-maker/examples/utils/building_od.pbtxt $TOD/data
 
